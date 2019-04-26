@@ -1,3 +1,3 @@
 
 
-[![Build Status](https://travis-ci.org/srkama/flaks-tdd-microservice.svg?branch=master)](https://travis-ci.org/srkama/flaks-tdd-microservice)
+[![Build Status](https://travis-ci.com/srkama/flaks-tdd-microservice.svg?branch=master)](https://travis-ci.com/srkama/flaks-tdd-microservice)
