@@ -69,3 +69,14 @@ def get_user(user_id):
             'message': 'user not found'
         }
         return jsonify(response_object), 404
+
+
+
+@users_blueprint.route('/users/', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    response_object = {
+        'status': 'success',
+        'data': [user.to_json() for user in users]
+    }
+    return jsonify(response_object), 200

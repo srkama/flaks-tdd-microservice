@@ -110,6 +110,24 @@ class TestUserService(BaseTestCase):
             self.assertIn('user not found', data['message'])
             self.assertIn('error', data['status'])
 
+    def test_get_users(self):
+        users = [
+            User(username='kamal1',email='kamal1.s@gc.com'),
+            User(username='kamal',email='kamal.s@gc.com'),
+        ]
+        db.session.add_all(users)
+        db.session.commit()
+        with self.client:
+            response = self.client.get(f'/users/')
+            data = json.loads(response.data)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(data['status'], 'success')
+            self.assertEqual(data['data'][0]['username'], 'kamal1')
+            self.assertEqual(data['data'][0]['email'],'kamal1.s@gc.com')
+            self.assertEqual(data['data'][1]['username'],'kamal')
+            self.assertEqual(data['data'][1]['email'],'kamal.s@gc.com')
+
+
 
 if __name__ == '__main__':
     unittest.main()
