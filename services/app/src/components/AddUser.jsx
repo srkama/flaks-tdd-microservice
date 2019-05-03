@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function AddUser(props) {
-    console.log(props);
     const { username, email, handleChange, handleSubmit } = props;
     return (
         <form onSubmit={handleSubmit}>

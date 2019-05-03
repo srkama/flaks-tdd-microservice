@@ -45,7 +45,6 @@ export default class App extends Component {
       .catch(err => console.log(err));
   }
   render() {
-    console.log(config);
     return (
       <section className="section">
         <div className="container">
