@@ -40,7 +40,7 @@ services:
   app:
     build:
       context: ./services/app/
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile
     volumes:
       - './services/app/:/usr/src/app'
       - '/usr/src/app/node_modules'
