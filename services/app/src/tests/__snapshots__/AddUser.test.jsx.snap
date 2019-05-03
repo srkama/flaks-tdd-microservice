@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add User snapshots renders properly 1`] = `
+<form>
+  <div
+    className="field"
+  >
+    <label
+      className="label"
+    >
+      Name
+    </label>
+    <div
+      className="control"
+    >
+      <input
+        className="input"
+        name="username"
+        placeholder="Name"
+        required={true}
+        type="text"
+      />
+    </div>
+  </div>
+  <div
+    className="field"
+  >
+    <label
+      className="label"
+    >
+      Email
+    </label>
+    <div
+      className="control"
+    >
+      <input
+        className="input"
+        name="email"
+        placeholder="email"
+        required={true}
+        type="text"
+      />
+    </div>
+  </div>
+  <div
+    className="field is-grouped"
+  >
+    <div
+      className="control"
+    >
+      <input
+        className="button is-link"
+        name="submit"
+        type="submit"
+        value="Submit"
+      />
+    </div>
+  </div>
+</form>
+`;

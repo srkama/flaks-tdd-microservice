@@ -7,6 +7,9 @@ services:
         dockerfile: Dockerfile-dev
       ports:
         - 80:80
+      depends_on:
+        - users
+        - app
 
   users:
     build:
@@ -34,3 +37,17 @@ services:
     environment:
       - POSTGRES_USER:postgres
       - POSTGRES_PASSWORD:postgres
+  app:
+    build:
+      context: ./services/app/
+      dockerfile: Dockerfile-prod
+    volumes:
+      - './services/app/:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+    depends_on:
+      - users
