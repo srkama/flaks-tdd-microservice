@@ -21,7 +21,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'kamal',
-                    'email': 'kamal.s@gc.com'
+                    'email': 'kamal.s@gc.com',
+                    'password': 'sdfkhasdf9au'
                 }),
                 content_type='application/json',
             )
@@ -31,8 +32,8 @@ class TestUserService(BaseTestCase):
             self.assertIn('success', data['status'])
 
     @parameterized.expand([
-        ("kamals@gc",{'username':'kamal','email':'kamals@gc'}),
-        ("kamal&s@gc.com",{'username':'kamal','email':'kamal&s@gc.com'}),
+        ("kamals@gc",{'username':'kamal','email':'kamals@gc', 'password': 'sdfkhasdf9au'}),
+        ("kamal&s@gc.com",{'username':'kamal','email':'kamal&s@gc.com', 'password': 'sdfkhasdf9au'}),
     ])
     def test_add_user_with_invalid_email(self, name, input):
         with self.client:
@@ -47,9 +48,28 @@ class TestUserService(BaseTestCase):
             self.assertIn('error', data['status'])
 
     @parameterized.expand([
+        ("1",{'username':'kamal','email':'kamals@gc.com', 'password': '1'}),
+        ("121231",{'username':'kamal','email':'kamals@gc.com', 'password': '121231'}),
+        ("aaaa",{'username':'kamal','email':'kamals@gc.com', 'password': 'aaaa'}),
+    ])
+    def test_add_user_with_invalid_password(self, name, input):
+        with self.client:
+            response = self.client.post(
+                '/users',
+                data=json.dumps(input),
+                content_type='application/json',
+            )
+            data = json.loads(response.data.decode())
+            self.assertEqual(response.status_code, 400)
+            self.assertIn('invalid payload', data['message'])
+            self.assertIn('error', data['status'])
+
+
+    @parameterized.expand([
         ("empty payload",{}),
         ("username is missing",{'email':'kamal.s@gc.com'}),
         ("emailid is missing",{'username':'kamal'}),
+        ("password is missing", {'username':'kamal', 'email':'kamal.s@gc.com'})
     ])
     def test_add_user_with_invalid_payload(self, name, input):
         with self.client:
@@ -69,7 +89,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'kamal',
-                    'email': 'kamal.s@gc.com'
+                    'email': 'kamal.s@gc.com',
+                    'password': 'sdfkhasdf9au'
                 }),
                 content_type='application/json',
             )
@@ -77,7 +98,8 @@ class TestUserService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'kamal',
-                    'email': 'kamal.s@gc.com'
+                    'email': 'kamal.s@gc.com',
+                    'password': 'sdfkhasdf9au'
                 }),
                 content_type='application/json',
             )
@@ -87,7 +109,7 @@ class TestUserService(BaseTestCase):
             self.assertIn('error', data['status'])
 
     def test_get_user(self):
-        user = User(username='kamal',email='kamal.s@gc.com')
+        user = User(username='kamal',email='kamal.s@gc.com', password="234khsdkjfha")
         db.session.add(user)
         db.session.commit()
         with self.client:
@@ -100,7 +122,7 @@ class TestUserService(BaseTestCase):
             self.assertTrue(data['data']['active'])
 
     def test_get_user_invalid_user(self):
-        user = User(username='kamal',email='kamal.s@gc.com')
+        user = User(username='kamal',email='kamal.s@gc.com', password= 'sdfkhasdf9au')
         db.session.add(user)
         db.session.commit()
         with self.client:
@@ -112,8 +134,8 @@ class TestUserService(BaseTestCase):
 
     def test_get_users(self):
         users = [
-            User(username='kamal1',email='kamal1.s@gc.com'),
-            User(username='kamal',email='kamal.s@gc.com'),
+            User(username='kamal1',email='kamal1.s@gc.com', password='sdfkhasdf9au'),
+            User(username='kamal',email='kamal.s@gc.com', password='sdfkhasdf9au'),
         ]
         db.session.add_all(users)
         db.session.commit()

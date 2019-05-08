@@ -12,3 +12,5 @@ gunicorn
 coverage
 flake8
 flask-cors==3.0.7
+flask-migrate
+flask-bcrypt
