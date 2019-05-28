@@ -13,8 +13,9 @@ class TestDevelopmentConfig(TestCase):
         return app
 
     def test_development_config(self):
-        self.assertTrue(app.config['SECRET_KEY']=='my_key')
+        self.assertTrue(app.config['SECRET_KEY']==os.environ.get('DEV_SECRET_KEY'))
         self.assertFalse(current_app is None)
+        self.assertTrue(app.config['TOKEN_EXPIRATION_SECONDS']==900)
         self.assertTrue(app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_DEV_URL'))
 
 class TestProductionConfig(TestCase):
@@ -23,8 +24,9 @@ class TestProductionConfig(TestCase):
         return app
 
     def test_production_config(self):
-        self.assertTrue(app.config['SECRET_KEY']=='my_key')
+        self.assertTrue(app.config['SECRET_KEY']==os.environ.get('PROD_SECRET_KEY'))
         self.assertFalse(app.config['TESTING'])
+        self.assertTrue(app.config['TOKEN_EXPIRATION_SECONDS']==1800)
         self.assertTrue(app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_URL'))
 
 
@@ -34,9 +36,10 @@ class TestTestingConfig(TestCase):
         return app
 
     def test_testing_config(self):
-        self.assertTrue(app.config['SECRET_KEY']=='my_key')
+        self.assertTrue(app.config['SECRET_KEY']==os.environ.get('DEV_SECRET_KEY'))
         self.assertTrue(app.config['TESTING'])
         self.assertFalse(app.config['PRESERVE_CONTEXT_ON_EXCEPTION'])
+        self.assertTrue(app.config['TOKEN_EXPIRATION_SECONDS']==900)
         self.assertTrue(app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_TEST_URL'))
 
 

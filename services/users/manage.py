@@ -29,7 +29,7 @@ def recreate_db():
 def test():
     """Runs the tests without code coverage"""
     tests = unittest.TestLoader().discover('project/tests', pattern='test*.py')
-    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    result = unittest.TextTestRunner(verbosity=2, failfast=True).run(tests)
     if result.wasSuccessful():
         coverage_obj.stop()
         coverage_obj.save()
@@ -44,7 +44,7 @@ def test():
 def cov():
     """Runs the unit tests with coverage."""
     tests = unittest.TestLoader().discover('project/tests')
-    result = unittest.TextTestRunner(verbosity=2).run(tests)
+    result = unittest.TextTestRunner(verbosity=2, failfast=True).run(tests)
     if result.wasSuccessful():
         coverage_obj.stop()
         coverage_obj.save()
