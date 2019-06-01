@@ -13,10 +13,10 @@ class TestDevelopmentConfig(TestCase):
         return app
 
     def test_development_config(self):
-        self.assertTrue(app.config['SECRET_KEY']==os.environ.get('DEV_SECRET_KEY'))
+        self.assertEqual(app.config['SECRET_KEY'],os.environ.get('SECRET_KEY'))
         self.assertFalse(current_app is None)
-        self.assertTrue(app.config['TOKEN_EXPIRATION_SECONDS']==900)
-        self.assertTrue(app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_DEV_URL'))
+        self.assertEqual(app.config['TOKEN_EXPIRATION_SECONDS'],900)
+        self.assertEqual(app.config['SQLALCHEMY_DATABASE_URI'],os.getenv('DATABASE_DEV_URL'))
 
 class TestProductionConfig(TestCase):
     def create_app(self):
@@ -24,10 +24,10 @@ class TestProductionConfig(TestCase):
         return app
 
     def test_production_config(self):
-        self.assertTrue(app.config['SECRET_KEY']==os.environ.get('PROD_SECRET_KEY'))
+        self.assertEqual(app.config['SECRET_KEY'],os.environ.get('SECRET_KEY'))
         self.assertFalse(app.config['TESTING'])
-        self.assertTrue(app.config['TOKEN_EXPIRATION_SECONDS']==1800)
-        self.assertTrue(app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_URL'))
+        self.assertEqual(app.config['TOKEN_EXPIRATION_SECONDS'],1800)
+        self.assertEqual(app.config['SQLALCHEMY_DATABASE_URI'],os.getenv('DATABASE_URL'))
 
 
 class TestTestingConfig(TestCase):
@@ -36,11 +36,11 @@ class TestTestingConfig(TestCase):
         return app
 
     def test_testing_config(self):
-        self.assertTrue(app.config['SECRET_KEY']==os.environ.get('DEV_SECRET_KEY'))
+        self.assertEqual(app.config['SECRET_KEY'],os.environ.get('SECRET_KEY'))
         self.assertTrue(app.config['TESTING'])
         self.assertFalse(app.config['PRESERVE_CONTEXT_ON_EXCEPTION'])
-        self.assertTrue(app.config['TOKEN_EXPIRATION_SECONDS']==900)
-        self.assertTrue(app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_TEST_URL'))
+        self.assertEqual(app.config['TOKEN_EXPIRATION_SECONDS'],5)
+        self.assertEqual(app.config['SQLALCHEMY_DATABASE_URI'], os.getenv('DATABASE_TEST_URL'))
 
 
 if __name__ == "__main__":

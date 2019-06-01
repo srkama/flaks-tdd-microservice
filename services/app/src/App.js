@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Route, Switch } from 'react-router-dom';
+
 import 'bulma';
+
 import config from './app.config';
 import UserList from './components/UserList.jsx';
 import AddUser from './components/AddUser';
+import Aboutus from './components/Aboutus';
 
 export default class App extends Component {
   constructor(props) {
@@ -45,21 +49,27 @@ export default class App extends Component {
       .catch(err => console.log(err));
   }
   render() {
+    const userSection = <div>
+      <h1 className="title is-1">All Users</h1>
+      <hr /><br />
+      <AddUser
+        username={this.state.username}
+        email={this.state.email}
+        handleSubmit={this.submitHandler}
+        handleChange={this.changeHandler} />
+      <hr /><br />
+      <UserList users={this.state.users} />
+    </div>
     return (
       <section className="section">
         <div className="container">
           <div className="columns">
-            <div className="column is-one-third">
+            <div className="column is-half">
               <br />
-              <h1 className="title is-1">All Users</h1>
-              <hr /><br />
-              <AddUser
-                username={this.state.username}
-                email={this.state.email}
-                handleSubmit={this.submitHandler}
-                handleChange={this.changeHandler} />
-              <hr /><br />
-              <UserList users={this.state.users} />
+              <Switch>
+                <Route exact path="/" render={() => userSection} />
+                <Route exact path="/aboutus" component={Aboutus} />
+              </Switch>
             </div>
           </div>
         </div>

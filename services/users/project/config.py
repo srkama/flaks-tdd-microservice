@@ -8,18 +8,18 @@ class BaseConfig:
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_DEV_URL')
-    SECRET_KEY = os.environ.get('DEV_SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     TOKEN_EXPIRATION_SECONDS = 900  # new
 
 
 class TestingConfig(BaseConfig):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_TEST_URL')
-    SECRET_KEY = os.environ.get('DEV_SECRET_KEY')
-    TOKEN_EXPIRATION_SECONDS = 900  # new
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    TOKEN_EXPIRATION_SECONDS = 5  # new
 
 
 class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    SECRET_KEY = os.environ.get('PROD_SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     TOKEN_EXPIRATION_SECONDS = 1800  # new

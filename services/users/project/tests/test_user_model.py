@@ -1,4 +1,4 @@
-
+import time
 from project.api.models import User
 from project import db
 from base import BaseTestCase
@@ -43,12 +43,25 @@ class TestUserModel(BaseTestCase):
         db.session.add(user)
         db.session.commit()
         token = user.encode_auth_token()
-        self.assertTrue(isinstance(token,bytes))
+        self.assertTrue(isinstance(token,str))
 
     def test_decode_auth_token(self):
         user = User(username='kamal1',email='kamal.s1@gc.com', password="gc!sfdklas")
         db.session.add(user)
         db.session.commit()
         token = user.encode_auth_token()
-        user_id = User.decode_auth_token(token)
-        self.assertTrue(user_id == user.id)
+        user_obj = User.decode_auth_token(token)
+        self.assertTrue(user_obj.id == user.id)
+
+    def test_decode_auth_expired_token(self):
+        user = User(username='kamal1',email='kamal.s1@gc.com', password="gc!sfdklas")
+        db.session.add(user)
+        db.session.commit()
+        token = user.encode_auth_token()
+        time.sleep(6)
+        message = User.decode_auth_token(token)
+        self.assertEqual(message,'Signature expired. Please log in again.')
+
+    def test_decode_auth_invalid_token(self):
+        message = User.decode_auth_token('token')
+        self.assertEqual(message,'Invalid token. Please log in again.')

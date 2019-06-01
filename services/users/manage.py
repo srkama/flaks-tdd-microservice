@@ -1,3 +1,5 @@
+#! /usr/local/bin/python
+
 from flask.cli import FlaskGroup
 import unittest
 import coverage
@@ -29,14 +31,8 @@ def recreate_db():
 def test():
     """Runs the tests without code coverage"""
     tests = unittest.TestLoader().discover('project/tests', pattern='test*.py')
-    result = unittest.TextTestRunner(verbosity=2, failfast=True).run(tests)
+    result = unittest.TextTestRunner(verbosity=3, failfast=True).run(tests)
     if result.wasSuccessful():
-        coverage_obj.stop()
-        coverage_obj.save()
-        print('Converage Report')
-        coverage_obj.report()
-        coverage_obj.html_report()
-        coverage_obj.erase()
         return 0
     sys.exit(result)
 
@@ -57,8 +53,8 @@ def cov():
 
 @cli.command('seed_db')
 def seed_db():
-    db.session.add(User(username='kamal', email='kamal.s@gc.com'))
-    db.session.add(User(username='kamal1', email='kamal.s1@gc.com'))
+    db.session.add(User(username='kamal', password='global122', email='kamal.s@gc.com'))
+    db.session.add(User(username='kamal1', password='global123', email='kamal.s1@gc.com'))
     db.session.commit()
 
 if __name__ == "__main__":

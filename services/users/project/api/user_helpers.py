@@ -12,7 +12,7 @@ def create_user(post_json):
         return invalid_response, 400, None
 
     try:
-        username = post_json['username']
+        username = post_json['username'].lower()
         email = post_json['email']
         password = post_json['password']
 

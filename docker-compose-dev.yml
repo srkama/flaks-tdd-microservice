@@ -25,7 +25,7 @@ services:
       - DATABASE_DEV_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_prod
-      - DEV_SECRET_KEY=my_key
+      - SECRET_KEY=my_key
     depends_on:
       - users-db
 
