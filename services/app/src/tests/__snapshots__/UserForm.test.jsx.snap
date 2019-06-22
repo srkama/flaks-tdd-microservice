@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login snapshot matches properly 1`] = `
+<UserForm
+  formData={
+    Object {
+      "email": "",
+      "password": "",
+      "username": "",
+    }
+  }
+  title="Login Form"
+  type="login"
+/>
+`;
+
+exports[`Registration snapshot matches properly 1`] = `
+<UserForm
+  formData={
+    Object {
+      "email": "",
+      "password": "",
+      "username": "",
+    }
+  }
+  title="Registration Form"
+  type="registratoin"
+/>
+`;
