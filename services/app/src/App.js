@@ -109,7 +109,7 @@ export default class App extends Component {
 
         return (
             <div>
-                <NavBar title={this.state.title} />
+                <NavBar title={this.state.title} isAuthenticated={this.state.isAuthenticated} />
                 <section className="section">
                     <div className="container">
                         <div className="columns">
@@ -121,7 +121,7 @@ export default class App extends Component {
                                     <Route exact path="/registration" render={() => registerForm} />
                                     <Route exact path="/login" render={() => loginForm} />
                                     <Route exact path="/logout" render={() => logout} />
-                                    <Route exact path='/status' component={UserStatus} />
+                                    <Route exact path='/status' render={() => <UserStatus isAuthenticated={this.state.isAuthenticated} />} />
                                 </Switch>
                             </div>
                         </div>

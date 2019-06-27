@@ -10,7 +10,9 @@ export default class UserStatus extends Component {
     }
 
     componentDidMount() {
-        this.checkStatus()
+        if (this.props.isAuthenticated) {
+            this.checkStatus()
+        }
     }
 
     checkStatus = () => {
@@ -37,7 +39,7 @@ export default class UserStatus extends Component {
 
     render() {
 
-        if (this.props.isAuthenticated || this.state.error) {
+        if (!this.props.isAuthenticated || this.state.error) {
             return <p>You must be logged in to view this. Click <Link to="/login">here</Link> to log back in.</p>
         }
 
