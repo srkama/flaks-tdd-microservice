@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 const UserForm = (props) => {
-    console.log(props.formData);
+    if (props.isAuthenticated) {
+        return <Redirect to="/" />
+    }
     return (
         <div>
             <h1>{props.title}</h1>

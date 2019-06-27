@@ -9,6 +9,8 @@ import UserList from './components/UserList.jsx';
 import Aboutus from './components/Aboutus';
 import NavBar from './components/NavBar';
 import UserForm from './components/UserForm';
+import Logout from './components/Logout';
+import UserStatus from './components/UserStatus';
 
 export default class App extends Component {
     constructor(props) {
@@ -20,10 +22,12 @@ export default class App extends Component {
                 'email': '',
                 'password': ''
             },
-            title: 'Test App'
+            title: 'Test App',
+            isAuthenticated: false
         }
         this.submitHandler = this.submitHandler.bind(this);
         this.changeHandler = this.changeHandler.bind(this);
+        this.logoutHandler = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -34,22 +38,31 @@ export default class App extends Component {
         event.preventDefault();
 
         const formType = window.location.pathname.replace('/', '');
-        console.log(formType);
 
         const payload = {
-            username: this.state.username,
-            password: this.state.password
+            username: this.state.formData.username,
+            password: this.state.formData.password
         }
-        if (formType === 'register') {
-            payload['email'] = this.state.email
+        if (formType === 'registration') {
+            payload['email'] = this.state.formData.email
         }
-        console.log(payload)
         axios.post(`${config.REACT_API_URL}auth/${formType}`, payload)
             .then(res => {
-                this.getUsers();  // new
-                this.setState({ username: '', email: '' });  // new
+                this.setState(
+                    {
+                        formData: {
+                            'username': '',
+                            'email': '',
+                            'password': ''
+                        },
+                        isAuthenticated: true
+                    });
+                window.localStorage.setItem('auth_token', res.data['token']);
+                this.getUsers()
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                this.setState({ isAuthenticated: false })
+            });
     }
 
     changeHandler(event) {
@@ -63,6 +76,12 @@ export default class App extends Component {
             .then(res => this.setState({ users: res.data['data'] }))
             .catch(err => console.log(err));
     }
+
+    logout() {
+        window.localStorage.clear()
+        this.setState({ isAuthenticated: false })
+    }
+
     render() {
         const userSection = <div>
             <h1 className="title is-1">All Users</h1>
@@ -74,15 +93,19 @@ export default class App extends Component {
             type='login'
             title='Login Form'
             formData={this.state.formData}
+            isAuthenticated={this.state.isAuthenticated}
             handleChange={this.changeHandler}
             handleSubmit={this.submitHandler} />;
 
         const registerForm = <UserForm
             type='registration'
             title='Registration Form'
+            isAuthenticated={this.state.isAuthenticated}
             formData={this.state.formData}
             handleChange={this.changeHandler}
             handleSubmit={this.submitHandler} />;
+
+        const logout = <Logout logout={this.logoutHandler}></Logout>
 
         return (
             <div>
@@ -97,6 +120,8 @@ export default class App extends Component {
                                     <Route exact path="/aboutus" component={Aboutus} />
                                     <Route exact path="/registration" render={() => registerForm} />
                                     <Route exact path="/login" render={() => loginForm} />
+                                    <Route exact path="/logout" render={() => logout} />
+                                    <Route exact path='/status' component={UserStatus} />
                                 </Switch>
                             </div>
                         </div>

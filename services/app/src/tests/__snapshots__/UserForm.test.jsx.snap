@@ -1,29 +1,153 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login snapshot matches properly 1`] = `
-<UserForm
-  formData={
-    Object {
-      "email": "",
-      "password": "",
-      "username": "",
-    }
-  }
-  title="Login Form"
-  type="login"
-/>
+exports[`When not authenticated Login snapshot matches properly 1`] = `
+<div>
+  <h1>
+    Login Form
+  </h1>
+  <hr />
+  <br />
+  <form>
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Username
+      </label>
+      <div
+        className="control"
+      >
+        <input
+          className="input"
+          name="username"
+          placeholder="Name"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Password
+      </label>
+      <div
+        className="control"
+      >
+        <input
+          className="input"
+          name="password"
+          placeholder="password"
+          type="password"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      className="field is-grouped"
+    >
+      <div
+        className="control"
+      >
+        <input
+          className="button is-link"
+          name="submit"
+          type="submit"
+          value="Submit"
+        />
+      </div>
+    </div>
+  </form>
+</div>
 `;
 
-exports[`Registration snapshot matches properly 1`] = `
-<UserForm
-  formData={
-    Object {
-      "email": "",
-      "password": "",
-      "username": "",
-    }
-  }
-  title="Registration Form"
-  type="registratoin"
-/>
+exports[`When not authenticated Registration snapshot matches properly 1`] = `
+<div>
+  <h1>
+    Registration Form
+  </h1>
+  <hr />
+  <br />
+  <form>
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Username
+      </label>
+      <div
+        className="control"
+      >
+        <input
+          className="input"
+          name="username"
+          placeholder="Name"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Email
+      </label>
+      <div
+        className="control"
+      >
+        <input
+          className="input"
+          name="email"
+          placeholder="email"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Password
+      </label>
+      <div
+        className="control"
+      >
+        <input
+          className="input"
+          name="password"
+          placeholder="password"
+          type="password"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      className="field is-grouped"
+    >
+      <div
+        className="control"
+      >
+        <input
+          className="button is-link"
+          name="submit"
+          type="submit"
+          value="Submit"
+        />
+      </div>
+    </div>
+  </form>
+</div>
 `;

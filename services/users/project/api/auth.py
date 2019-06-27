@@ -26,7 +26,7 @@ def auth_login():
 
     if 'username' not in post_json or 'password' not in post_json:
         return jsonify(INVALID_PAYLOAD_MESSAGE), 400
-    
+
     user = User.query.filter_by(username=post_json['username'].lower()).first()
     if user and bcrypt.check_password_hash(user.password, post_json['password']):
         response = {
@@ -61,7 +61,7 @@ def auth_logout():
 @auth_blueprint.route('/auth/status', methods=['GET'])
 def auth_status():
     auth_header = request.headers.get('Authorization')
-    resp = ""    
+    resp = ""
     try:
         token = auth_header.split(' ')[1]
         response = User.decode_auth_token(token)
@@ -81,4 +81,3 @@ def auth_status():
     except Exception as e:
         resp = str(e)
     return jsonify({'status':'fail', 'message': resp}), 401
-

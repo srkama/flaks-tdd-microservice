@@ -59,7 +59,7 @@ exports[`should render NavBar snapshot properly 1`] = `
       >
         <a
           className="navbar-item"
-          href="/register"
+          href="/registration"
           onClick={[Function]}
         >
           Register
